@@ -7,7 +7,10 @@ import Cart from './components/Cart.jsx';
 import Items from './components/Items.jsx';
 import ItemDetail from './components/ItemDetail.jsx';
 
-const BACKEND_URL = 'http://localhost:3002';
+const BACKEND_URL = 'http://localhost:3004';
+
+// create empty global state for items
+export const ItemsContext = React.createContext(null);
 
 export default function App() {
   const [items, setItems] = useState([]);
@@ -40,14 +43,16 @@ export default function App() {
     <div className="container">
       <div className="row">
         <h1 className="page-title">Wow Shopping!</h1>
-        <Items items={items} setItemDetail={setItemDetail} />
-        {items.length === 0 && (
-          <button type="button" onClick={getItems}>
-            Get Items
-          </button>
-        )}
-        <ItemDetail item={selectedItem} addToCart={addToCart} />
-        <Cart items={cart} emptyCart={emptyCart} />
+        <ItemsContext.Provider value={{items, setItemDetail, selectedItem, addToCart}} >
+          <Items />
+          {items.length === 0 && (
+            <button type="button" onClick={getItems}>
+              Get Items
+            </button>
+          )}
+          <ItemDetail />
+          <Cart items={cart} emptyCart={emptyCart} />
+        </ItemsContext.Provider>
       </div>
     </div>
   );

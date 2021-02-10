@@ -1,17 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { ItemsContext } from '../App.js';
 
-export default function Items({ items, setItemDetail }) {
+export default function Items() {
+  const itemsStateObject = useContext(ItemsContext);
+
   const [selectedItemIndex, setSelectedItemIndex] = useState();
 
   const setItemSelected = (item, index) => {
-    setItemDetail(index);
+    itemsStateObject.setItemDetail(index);
     setSelectedItemIndex(index);
   };
 
   return (
     <div className="col-sm">
       <div className="items">
-        {items.map((item, index) => (
+        {itemsStateObject.items.map((item, index) => (
           <button
             key={item.id}
             type="button"

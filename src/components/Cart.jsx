@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+const BACKEND_URL = 'http://localhost:3004';
 
 export default function Cart({ items, emptyCart }) {
   const [orderId, setOrderId] = useState(null);
@@ -37,7 +38,7 @@ export default function Cart({ items, emptyCart }) {
   const createOrder = () => {
     const { total } = calculateTotals(items);
     const order = { total, items };
-    axios.post('/orders', order).then((result) => {
+    axios.post(BACKEND_URL+'/orders', order).then((result) => {
       setOrderId(result.data.order.id);
       emptyCart();
       console.log(result);

@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { ItemsContext } from '../App.js';
 
 export default function ItemDetail({ item, addToCart }) {
+  const itemsStateObject = useContext(ItemsContext);
   const [quantity, setQuantity] = useState(1);
 
-  if (!item) {
+  if (!itemsStateObject.selectedItem) {
     return <div></div>;
   }
 
@@ -12,14 +14,14 @@ export default function ItemDetail({ item, addToCart }) {
   };
 
   const detailAddCart = () => {
-    addToCart(item, quantity);
+    itemsStateObject.addToCart(itemsStateObject.selectedItem, quantity);
   };
 
   return (
     <div className="col-sm">
       <div className="item-detail">
-        <h2>{item.name}</h2>
-        <p>{item.description}</p>
+        <h2>{itemsStateObject.selectedItem.name}</h2>
+        <p>{itemsStateObject.selectedItem.description}</p>
         <p>
           <select
             className="item-quantity"
